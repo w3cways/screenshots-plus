@@ -1,7 +1,7 @@
 {
-  "name": "electron-screenshots",
+  "name": "electron-screenshots-plus",
   "version": "0.5.4",
-  "description": "electron 截图插件",
+  "description": "electron 截图插件 plus",
   "types": "lib/screenshots.d.ts",
   "main": "lib/screenshots.js",
   "files": [
@@ -17,20 +17,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nashaofu/screenshots.git"
+    "url": "git+https://github.com/w3cways/screenshots-plus.git"
   },
   "keywords": [
     "electron",
     "shortcut",
     "screenshot",
+    "capture",
     "cropper"
   ],
-  "author": "nashaofu",
+  "author": "w3cways",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nashaofu/screenshots/issues"
-  },
-  "homepage": "https://github.com/nashaofu/screenshots/tree/master/packages/electron-screenshots#readme",
+  "homepage": "https://github.com/w3cways/screenshots-plus/tree/master/packages/electron-screenshots#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

@@ -9,9 +9,9 @@ app.whenReady().then(() => {
     logger: (...args: unknown[]) => console.log(args),
     singleWindow: true
   })
-  screenshots.$view.webContents.openDevTools()
+  screenshots.$win?.webContents.openDevTools()
 
-  globalShortcut.register('ctrl+shift+a', () => {
+  globalShortcut.register('ctrl+shift+m', () => {
     screenshots.startCapture()
   })
 
@@ -38,11 +38,10 @@ app.whenReady().then(() => {
   })
 
   const mainWin = new BrowserWindow({
-    fullscreen: true,
     show: true
   })
   mainWin.removeMenu()
-  mainWin.loadURL('https://github.com/nashaofu')
+  mainWin.loadURL('https://baidu.com')
 })
 
 app.on('window-all-closed', () => {

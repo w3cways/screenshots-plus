@@ -1,6 +1,13 @@
-# electron-screenshots
+# electron-screenshots-plus
 
-> electron 截图插件
+> electron 截图插件 基于electron-screenshots二次开发
+加快了截图速度，窗口性能做了优化
+
+截图默认快捷键改成了 "ctrl + shift + m"
+## Install
+```npm i electron-screenshots-plus```
+
+--------------------------------分隔线（下面是原插件说明,  把electron-screenshots替换成了electron-screenshots-plus）--------------------------------
 
 ## Prerequisites
 
@@ -58,7 +65,7 @@ app.on('window-all-closed', () => {
 ```js
 {
   externals: {
-    'electron-screenshots': 'require("electron-screenshots")'
+    'electron-screenshots-plus': 'require("electron-screenshots-plus")'
   }
 }
 ```
@@ -72,7 +79,7 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       // 不打包，使用 require 加载
-      externals: ['electron-screenshots']
+      externals: ['electron-screenshots-plus']
     }
   }
 }
