@@ -1,13 +1,15 @@
 # electron-screenshots-plus
 
-> electron 截图插件 基于electron-screenshots二次开发
-加快了截图速度，窗口性能做了优化
+> electron 截图插件 基于 electron-screenshots 二次开发
+> 加快了截图速度，窗口性能做了优化
 
 截图默认快捷键改成了 "ctrl + shift + m"
-## Install
-```npm i electron-screenshots-plus```
 
---------------------------------分隔线（下面是原插件说明,  把electron-screenshots替换成了electron-screenshots-plus）--------------------------------
+## Install
+
+`npm i electron-screenshots-plus`
+
+--------------------------------分隔线（下面是原插件说明, 使用的时候把 electron-screenshots 替换成 electron-screenshots-plus）--------------------------------
 
 ## Prerequisites
 
@@ -20,42 +22,42 @@
 ## Usage
 
 ```ts
-import debug from 'electron-debug'
-import { app, globalShortcut } from 'electron'
-import Screenshots from './screenshots'
+import debug from "electron-debug";
+import { app, globalShortcut } from "electron";
+import Screenshots from "./screenshots";
 
 app.whenReady().then(() => {
-  const screenshots = new Screenshots()
-  globalShortcut.register('ctrl+shift+a', () => {
-    screenshots.startCapture()
-    screenshots.$view.webContents.openDevTools()
-  })
+  const screenshots = new Screenshots();
+  globalShortcut.register("ctrl+shift+a", () => {
+    screenshots.startCapture();
+    screenshots.$view.webContents.openDevTools();
+  });
   // 点击确定按钮回调事件
-  screenshots.on('ok', (e, buffer, bounds) => {
-    console.log('capture', buffer, bounds)
-  })
+  screenshots.on("ok", (e, buffer, bounds) => {
+    console.log("capture", buffer, bounds);
+  });
   // 点击取消按钮回调事件
-  screenshots.on('cancel', () => {
-    console.log('capture', 'cancel1')
-  })
-  screenshots.on('cancel', e => {
+  screenshots.on("cancel", () => {
+    console.log("capture", "cancel1");
+  });
+  screenshots.on("cancel", (e) => {
     // 执行了preventDefault
     // 点击取消不会关闭截图窗口
-    e.preventDefault()
-    console.log('capture', 'cancel2')
-  })
+    e.preventDefault();
+    console.log("capture", "cancel2");
+  });
   // 点击保存按钮回调事件
-  screenshots.on('save', (e, buffer, bounds) => {
-    console.log('capture', buffer, bounds)
-  })
-  debug({ showDevTools: true, devToolsMode: 'undocked' })
-})
+  screenshots.on("save", (e, buffer, bounds) => {
+    console.log("capture", buffer, bounds);
+  });
+  debug({ showDevTools: true, devToolsMode: "undocked" });
+});
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
   }
-})
+});
 ```
 
 ### 注意
@@ -75,24 +77,24 @@ app.on('window-all-closed', () => {
 ```js
 // vue.config.js
 module.exports = {
-  publicPath: '.',
+  publicPath: ".",
   pluginOptions: {
     electronBuilder: {
       // 不打包，使用 require 加载
-      externals: ['electron-screenshots-plus']
-    }
-  }
-}
+      externals: ["electron-screenshots-plus"],
+    },
+  },
+};
 ```
 
 - esc 取消截图，可用以下代码实现按 esc 取消截图
 
 ```js
-globalShortcut.register('esc', () => {
+globalShortcut.register("esc", () => {
   if (screenshots.$win?.isFocused()) {
-    screenshots.endCapture()
+    screenshots.endCapture();
   }
-})
+});
 ```
 
 - 加速截图界面展示，不销毁`BrowserWindow`，减少创建窗口的开销，可用以下代码实现。**需注意，启用该功能，会导致`window-all-closed`事件不触发，因此需要手动关闭截图窗口**
@@ -102,8 +104,8 @@ globalShortcut.register('esc', () => {
 // 如果设置为 true 则会在第一次调用截图窗口时创建，后续调用时直接使用
 // 且由于窗口不会 close，所以不会触发 app 的 `window-all-closed` 事件
 const screenshots = new Screenshots({
-  singleWindow: true
-})
+  singleWindow: true,
+});
 ```
 
 ## Methods
@@ -111,33 +113,33 @@ const screenshots = new Screenshots({
 - `Debugger`类型产考`debug`中的`Debugger`类型
 
 ```ts
-export type LoggerFn = (...args: unknown[]) => void
-export type Logger = Debugger | LoggerFn
+export type LoggerFn = (...args: unknown[]) => void;
+export type Logger = Debugger | LoggerFn;
 
 export interface Lang {
-  magnifier_position_label?: string
-  operation_ok_title?: string
-  operation_cancel_title?: string
-  operation_save_title?: string
-  operation_redo_title?: string
-  operation_undo_title?: string
-  operation_mosaic_title?: string
-  operation_text_title?: string
-  operation_brush_title?: string
-  operation_arrow_title?: string
-  operation_ellipse_title?: string
-  operation_rectangle_title?: string
+  magnifier_position_label?: string;
+  operation_ok_title?: string;
+  operation_cancel_title?: string;
+  operation_save_title?: string;
+  operation_redo_title?: string;
+  operation_undo_title?: string;
+  operation_mosaic_title?: string;
+  operation_text_title?: string;
+  operation_brush_title?: string;
+  operation_arrow_title?: string;
+  operation_ellipse_title?: string;
+  operation_rectangle_title?: string;
 }
 
 export interface ScreenshotsOpts {
-  lang?: Lang
+  lang?: Lang;
   // 调用日志，默认值为 debug('electron-screenshots')
   // debug https://www.npmjs.com/package/debug
-  logger?: Logger
+  logger?: Logger;
   // 是否复用截图窗口，加快截图窗口显示，默认值为 false
   // 如果设置为 true 则会在第一次调用截图窗口时创建，后续调用时直接使用
   // 且由于窗口不会 close，所以不会触发 app 的 `window-all-closed` 事件
-  singleWindow?: boolean
+  singleWindow?: boolean;
 }
 ```
 
@@ -154,30 +156,30 @@ export interface ScreenshotsOpts {
 
 ```ts
 interface Bounds {
-  x: number
-  y: number
-  width: number
-  height: number
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 export interface Display {
-  id: number
-  x: number
-  y: number
-  width: number
-  height: number
+  id: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 export interface ScreenshotsData {
-  bounds: Bounds
-  display: Display
+  bounds: Bounds;
+  display: Display;
 }
 
 class Event {
-  public defaultPrevented = false
+  public defaultPrevented = false;
 
   public preventDefault(): void {
-    this.defaultPrevented = true
+    this.defaultPrevented = true;
   }
 }
 ```
@@ -199,30 +201,30 @@ class Event {
 ```ts
 const screenshots = new Screenshots({
   lang: {
-    magnifier_position_label: 'Position',
-    operation_ok_title: 'Ok',
-    operation_cancel_title: 'Cancel',
-    operation_save_title: 'Save',
-    operation_redo_title: 'Redo',
-    operation_undo_title: 'Undo',
-    operation_mosaic_title: 'Mosaic',
-    operation_text_title: 'Text',
-    operation_brush_title: 'Brush',
-    operation_arrow_title: 'Arrow',
-    operation_ellipse_title: 'Ellipse',
-    operation_rectangle_title: 'Rectangle'
-  }
-})
+    magnifier_position_label: "Position",
+    operation_ok_title: "Ok",
+    operation_cancel_title: "Cancel",
+    operation_save_title: "Save",
+    operation_redo_title: "Redo",
+    operation_undo_title: "Undo",
+    operation_mosaic_title: "Mosaic",
+    operation_text_title: "Text",
+    operation_brush_title: "Brush",
+    operation_arrow_title: "Arrow",
+    operation_ellipse_title: "Ellipse",
+    operation_rectangle_title: "Rectangle",
+  },
+});
 
-screenshots.on('save', (e, buffer, data) => {
+screenshots.on("save", (e, buffer, data) => {
   // 阻止插件自带的保存功能
   // 用户自己控制保存功能
-  e.preventDefault()
+  e.preventDefault();
   // 用户可在这里自己定义保存功能
-  console.log('capture', buffer, data)
-})
+  console.log("capture", buffer, data);
+});
 
-screenshots.startCapture()
+screenshots.startCapture();
 ```
 
 ## Screenshot
