@@ -7,7 +7,8 @@ import {
   ipcMain,
   nativeImage,
   app,
-  CreateFromBufferOptions
+  CreateFromBufferOptions,
+  webFrame
 } from 'electron'
 import Events from 'events'
 import fs from 'fs-extra'
@@ -45,6 +46,18 @@ const webPreferences = {
   nodeIntegration: false,
   contextIsolation: true,
   nativeWindowOpen: false
+}
+
+declare module 'electron' {
+  export interface BrowserView {
+    // 扩展 BrowserView 属性
+    id: string;
+  }
+
+  export interface BrowserWindow {
+    // 扩展 BrowserView 属性
+    name: string;
+  }
 }
 
 export { Bounds }
@@ -121,6 +134,9 @@ export default class Screenshots extends Events {
       // mac下需要先hide，加快关闭截图速度，
       this.$win.hide()
       this.$win.webContents.reloadIgnoringCache()
+    }
+    if (webFrame) {
+      webFrame.clearCache()
     }
     this.$win.webContents.send('SCREENSHOTS:reset')
 
@@ -216,6 +232,8 @@ export default class Screenshots extends Events {
       thickFrame: false,
       webPreferences
     })
+
+    win.name = 'screenshots'
     win.loadURL(
       `file://${require.resolve('react-screenshots/electron/electron.html')}`
     )
